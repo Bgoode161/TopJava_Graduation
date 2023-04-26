@@ -9,16 +9,18 @@ VALUES ('USER', 1),
        ('USER', 2);
 
 INSERT INTO RESTAURANT (name, address)
-VALUES ('MONUMENT', 'Trg Republic, 1');
+VALUES ('Monument', 'Trg Republic, 1'),
+       ('Walter', 'Zaplanska, 32');
 
+INSERT INTO DISH (name, price, restaurant_id, date)
+VALUES ('Grilled Salmon', 1200, 1, '2023-04-24'),
+       ('Caesar Salad', 500, 1, '2023-04-24'),
+       ('Chicken Alfredo', 400, 1, '2023-04-24'),
+       ('Margherita Pizza', 800, 1, '2023-04-24'),
+       ('Beef Tacos', 750, 1, '2023-04-24');
 INSERT INTO DISH (name, price, restaurant_id)
-VALUES ('Grilled Salmon', 1200, 1),
-       ('Caesar Salad', 500, 1),
-       ('Chicken Alfredo', 400, 1),
-       ('Margherita Pizza', 800, 1),
-       ('Beef Tacos', 750, 1),
-       ('Sushi Roll', 1000, 1),
-       ('Pad Thai', 600, 1),
-       ('Spaghetti Carbonara', 450, 1),
-       ('Pho Soup', 300, 1),
-       ('Miso Ramen', 400, 1);
+VALUES ('Sushi Roll', 1000, 2),
+       ('Pad Thai', 600, 2),
+       ('Spaghetti Carbonara', 450, 2),
+       ('Pho Soup', 300, 2),
+       ('Miso Ramen', 400, 2);

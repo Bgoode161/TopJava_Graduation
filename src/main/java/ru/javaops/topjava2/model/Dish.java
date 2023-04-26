@@ -1,5 +1,6 @@
 package ru.javaops.topjava2.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -8,8 +9,12 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Range;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "Dish")
+@Table(name = "Dish", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "restaurant_id",
+                                            "date"}, name = "dishes_unique_name_restaurant_date_idx")})
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,8 +26,13 @@ public class Dish extends NamedEntity {
     @Range(min = 10, max = 10000)
     private Long price;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @JsonBackReference
     private Restaurant restaurant;
+
+    @Column(name = "date", columnDefinition = "date default now()")
+    @NotNull
+    private LocalDate date;
 
 }
