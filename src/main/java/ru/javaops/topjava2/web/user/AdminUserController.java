@@ -5,10 +5,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.topjava2.model.User;
+import ru.javaops.topjava2.web.AuthUser;
 
 import java.net.URI;
 import java.util.List;
@@ -21,7 +23,7 @@ import static ru.javaops.topjava2.util.validation.ValidationUtil.checkNew;
 // TODO: cache only most requested, seldom changed data!
 public class AdminUserController extends AbstractUserController {
 
-    static final String REST_URL = "/api/admin/users";
+     static final String REST_URL = "/api/admin/users";
 
     @Override
     @GetMapping("/{id}")

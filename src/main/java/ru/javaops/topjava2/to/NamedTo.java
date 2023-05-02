@@ -9,6 +9,7 @@ import ru.javaops.topjava2.util.validation.NoHtml;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class NamedTo extends BaseTo {
+
     @NotBlank
     @Size(min = 2, max = 128)
     @NoHtml

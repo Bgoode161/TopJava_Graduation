@@ -21,4 +21,5 @@ public class ValidationUtil {
             throw new IllegalRequestDataException(bean.getClass().getSimpleName() + " must has id=" + id);
         }
     }
+
 }

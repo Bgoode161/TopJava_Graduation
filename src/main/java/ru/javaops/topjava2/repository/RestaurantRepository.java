@@ -15,8 +15,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
 
-
-   @Query("SELECT r FROM Restaurant r JOIN FETCH r.dishes d WHERE d.date=:date")
-    List<Restaurant> getAllActual(@Param("date") LocalDate date);
+    @Query("SELECT r FROM Restaurant r JOIN FETCH r.menu d WHERE d.dateCreated=:dateCreated")
+    List<Restaurant> getAllActual(@Param("dateCreated") LocalDate dateCreated);
 
 }

@@ -1,16 +1,15 @@
 package ru.javaops.topjava2.web.restaurant;
 
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.topjava2.model.Restaurant;
-
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
 import static ru.javaops.topjava2.util.validation.ValidationUtil.*;
@@ -19,7 +18,7 @@ import static ru.javaops.topjava2.util.validation.ValidationUtil.*;
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestaurantController extends AbstractRestaurantController {
 
-    static final String REST_URL = "/api/admin/restaurants";
+     static final String REST_URL = "/api/admin/restaurants";
 
     @Override
     @GetMapping("/{id}")
@@ -38,6 +37,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         return super.getAll();
     }
 
+    @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {
         checkNew(restaurant);
@@ -49,7 +49,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         assureIdConsistent(restaurant, id);
         restaurantRepository.save(restaurant);
     }

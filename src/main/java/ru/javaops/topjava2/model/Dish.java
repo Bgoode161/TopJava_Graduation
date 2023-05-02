@@ -3,10 +3,7 @@ package ru.javaops.topjava2.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
 import java.time.LocalDate;
@@ -32,7 +29,6 @@ public class Dish extends NamedEntity {
     private Restaurant restaurant;
 
     @Column(name = "date", columnDefinition = "date default now()")
-    @NotNull
-    private LocalDate date;
+    private LocalDate dateCreated;
 
 }
