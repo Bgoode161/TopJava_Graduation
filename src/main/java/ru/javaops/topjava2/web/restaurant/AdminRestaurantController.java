@@ -51,6 +51,7 @@ public class AdminRestaurantController extends AbstractRestaurantController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         assureIdConsistent(restaurant, id);
+
         restaurantRepository.save(restaurant);
     }
 

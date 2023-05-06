@@ -28,4 +28,5 @@ public class Restaurant extends NamedEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
     private List<Dish> menu;
+
 }

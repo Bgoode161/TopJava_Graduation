@@ -17,6 +17,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString(callSuper = true)
 public class Dish extends NamedEntity {
+    @Column(name = "date", columnDefinition = "date default now()", nullable = false)
+    @NotNull
+    private LocalDate dateCreated;
 
     @Column(name = "price", nullable = false)
     @NotNull
@@ -27,8 +30,5 @@ public class Dish extends NamedEntity {
     @JoinColumn(name = "restaurant_id", nullable = false)
     @JsonBackReference
     private Restaurant restaurant;
-
-    @Column(name = "date", columnDefinition = "date default now()")
-    private LocalDate dateCreated;
 
 }

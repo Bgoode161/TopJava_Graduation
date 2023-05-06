@@ -1,5 +1,6 @@
 package ru.javaops.topjava2.web.dish;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -61,6 +62,9 @@ public class AdminDishController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody Dish dish, @PathVariable int id, @PathVariable int restId) {
         assureIdConsistent(dish, id);
+        if (dish.getDateCreated() == null) {
+            dish.setDateCreated(LocalDate.now());
+        }
         if (dish.getRestaurant().getId().equals(restId)) {
             dishRepository.save(dish);
         } else {

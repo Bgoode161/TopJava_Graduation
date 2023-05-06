@@ -11,8 +11,7 @@ import ru.javaops.topjava2.repository.RestaurantRepository;
 import java.time.LocalDate;
 import java.util.List;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 public abstract class AbstractRestaurantController {
 
     @Autowired
