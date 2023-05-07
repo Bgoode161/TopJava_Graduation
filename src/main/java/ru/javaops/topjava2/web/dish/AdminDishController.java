@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.topjava2.error.IllegalRequestDataException;
@@ -68,9 +69,21 @@ public class AdminDishController {
         if (dish.getRestaurant().getId().equals(restId)) {
             dishRepository.save(dish);
         } else {
-            throw new IllegalRequestDataException(dish.getClass().getSimpleName() + " id = " + id + " - does not belong to this restaurant");
+            throw new IllegalRequestDataException("Dish with id = " + id + " - does not belong to current restaurant");
         }
 
+    }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id, @PathVariable int restId) {
+        if (dishRepository.getReferenceById(id).getRestaurant().getId().equals(restId)) {
+            dishRepository.deleteExisted(id);
+        }
+        else {
+            throw new IllegalRequestDataException("Dish with id = " + id + " - does not belong to current restaurant");
+        }
     }
 
 }

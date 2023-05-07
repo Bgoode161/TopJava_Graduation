@@ -10,10 +10,13 @@ import java.lang.annotation.Native;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 
 @Transactional(readOnly = true)
 public interface RestaurantRepository extends BaseRepository<Restaurant> {
+
+    Optional<Restaurant> findByNameIgnoreCase(String name);
 
     @Query("SELECT r FROM Restaurant r JOIN FETCH r.menu d WHERE d.dateCreated=:dateCreated")
     List<Restaurant> getAllActual(@Param("dateCreated") LocalDate dateCreated);
