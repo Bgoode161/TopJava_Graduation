@@ -20,26 +20,25 @@ INSERT INTO RESTAURANT (name, address)
 VALUES ('Monument', 'Trg Republic, 1'),
        ('Walter', 'Zaplanska, 32');
 
-INSERT INTO DISH (name, price, restaurant_id, date)
-VALUES ('Grilled Salmon', 1200, 1, '2023-04-24'),
-       ('Caesar Salad', 500, 1, '2023-04-24'),
-       ('Chicken Alfredo', 400, 1, '2023-04-24'),
-       ('Margherita Pizza', 800, 1, '2023-04-24'),
-       ('Beef Tacos', 750, 1, '2023-04-24');
+INSERT INTO DISH (name, price, restaurant_id)
+VALUES ('Grilled Salmon', 1200, 1),
+       ('Caesar Salad', 500, 1),
+       ('Chicken Alfredo', 400, 1),
+       ('Margherita Pizza', 800, 1),
+       ('Beef Tacos', 750, 1);
 INSERT INTO DISH (name, price, restaurant_id)
 VALUES ('Sushi Roll', 1000, 2),
        ('Pad Thai', 600, 2),
        ('Spaghetti Carbonara', 450, 2),
        ('Pho Soup', 300, 2),
        ('Miso Ramen', 400, 2);
-INSERT INTO VOTE (date, time, restaurant_id, user_id)
-VALUES ('2023-05-04', '10:00:00', 1, 1),
-       ('2023-05-04', '10:00:00', 1, 4),
-       ('2023-05-04', '10:00:00', 1, 5),
-       ('2023-05-04', '10:00:00', 1, 6),
-       ('2023-05-04', '10:00:00', 1, 7),
-       ('2023-05-04', '10:00:00', 2, 8),
-       ('2023-05-04', '10:00:00', 2, 9),
-       ('2023-05-04', '10:00:00', 2, 10);
 INSERT INTO VOTE (restaurant_id, user_id)
-VALUES (2, 11);
+VALUES (1, 1),
+       (1, 4),
+       (1, 5),
+       (1, 6),
+       (1, 7),
+       (2, 8),
+       (2, 9),
+       (2, 10),
+       (2, 11);

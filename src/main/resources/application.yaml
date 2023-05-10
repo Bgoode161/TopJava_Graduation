@@ -38,6 +38,7 @@ logging:
   level:
     root: WARN
     ru.javaops.topjava2: DEBUG
+    org.springframework.jdbc: DEBUG
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: DEBUG
 
 server.servlet:

@@ -1,7 +1,7 @@
 package ru.javaops.topjava2.web.dish;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import ru.javaops.topjava2.repository.DishRepository;
 import ru.javaops.topjava2.repository.RestaurantRepository;
 
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 
-import static ru.javaops.topjava2.util.validation.ValidationUtil.*;
+import static ru.javaops.topjava2.util.validation.ValidationUtil.assureIdConsistent;
+import static ru.javaops.topjava2.util.validation.ValidationUtil.checkNew;
 
 @RestController
 @AllArgsConstructor
@@ -42,36 +42,27 @@ public class AdminDishController {
 
     @GetMapping
     public List<Dish> getAll(@PathVariable("restId") int restId) {
-        return dishRepository.getAllByRestaurantId(restId);
+        return dishRepository.findAllByRestaurantId(restId, Sort.by(Sort.Direction.DESC, "dateCreated"));
     }
 
-
+    @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> createWithLocation(@RequestBody Dish dish, @PathVariable("restId") int restId) {
         checkNew(dish);
-        if (dish.getDateCreated() == null) {
-            dish.setDateCreated(LocalDate.now());
-        }
         dish.setRestaurant(restaurantRepository.getReferenceById(restId));
-        Dish created = dishRepository.save(dish);
+        Dish created = dishRepository.prepareAndSave(dish);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath().
                 path(REST_URL + "/{id}").buildAndExpand(restId, created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @Transactional
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody Dish dish, @PathVariable int id, @PathVariable int restId) {
         assureIdConsistent(dish, id);
-        if (dish.getDateCreated() == null) {
-            dish.setDateCreated(LocalDate.now());
-        }
-        if (dish.getRestaurant().getId().equals(restId)) {
-            dishRepository.save(dish);
-        } else {
-            throw new IllegalRequestDataException("Dish with id = " + id + " - does not belong to current restaurant");
-        }
-
+        dish.setRestaurant(restaurantRepository.getReferenceById(restId));
+        dishRepository.prepareAndSave(dish);
     }
 
     @Transactional
@@ -80,8 +71,7 @@ public class AdminDishController {
     public void delete(@PathVariable int id, @PathVariable int restId) {
         if (dishRepository.getReferenceById(id).getRestaurant().getId().equals(restId)) {
             dishRepository.deleteExisted(id);
-        }
-        else {
+        } else {
             throw new IllegalRequestDataException("Dish with id = " + id + " - does not belong to current restaurant");
         }
     }

@@ -1,5 +1,6 @@
 package ru.javaops.topjava2.repository;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,13 @@ import java.util.List;
 @Transactional(readOnly = true)
 public interface DishRepository extends BaseRepository<Dish> {
 
-    @Query("SELECT d FROM Dish d WHERE d.restaurant.id=:id")
-    List<Dish> getAllByRestaurantId(@Param("id") int id);
+    List<Dish> findAllByRestaurantId(int id, Sort sort);
+
+    default Dish prepareAndSave(Dish dish) {
+        if (dish.getDateCreated() == null) {
+            dish.setDateCreated(LocalDate.now());
+        }
+        return save(dish);
+    }
 
 }

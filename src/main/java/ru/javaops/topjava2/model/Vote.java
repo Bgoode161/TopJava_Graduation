@@ -1,6 +1,8 @@
 package ru.javaops.topjava2.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -25,11 +27,11 @@ public class Vote extends BaseEntity {
 
     @Column(name = "date", nullable = false, columnDefinition = "date default now()")
     @NotNull
-    private LocalDate localDate;
+    private LocalDate dateCreated;
 
     @Column(name = "time", nullable = false, columnDefinition = "time default now()")
     @NotNull
-    private LocalTime localTime;
+    private LocalTime timeCreated;
 
     @Column(name = "user_id", nullable = false)
     @NotNull
@@ -37,8 +39,9 @@ public class Vote extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @JsonBackReference
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
+    @JsonIdentityReference(alwaysAsId = true)
     public Restaurant restaurant;
 
 }

@@ -3,6 +3,7 @@ package ru.javaops.topjava2.util.validation;
 import lombok.experimental.UtilityClass;
 import ru.javaops.topjava2.HasId;
 import ru.javaops.topjava2.error.IllegalRequestDataException;
+import ru.javaops.topjava2.model.Vote;
 
 @UtilityClass
 public class ValidationUtil {

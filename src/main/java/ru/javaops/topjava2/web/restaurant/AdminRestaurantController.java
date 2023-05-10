@@ -1,42 +1,36 @@
 package ru.javaops.topjava2.web.restaurant;
 
 import jakarta.validation.Valid;
-
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.topjava2.model.Restaurant;
+
 import java.net.URI;
 import java.util.List;
 
-import static ru.javaops.topjava2.util.validation.ValidationUtil.*;
+import static ru.javaops.topjava2.util.validation.ValidationUtil.assureIdConsistent;
+import static ru.javaops.topjava2.util.validation.ValidationUtil.checkNew;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = AdminRestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestaurantController extends AbstractRestaurantController {
 
-     static final String REST_URL = "/api/admin/restaurants";
+    static final String REST_URL = "/api/admin/restaurants";
 
 
-     private UniqueNameValidator nameValidator;
+    private UniqueNameValidator nameValidator;
 
-     @InitBinder
-     protected void initBinder(WebDataBinder binder) {
-         binder.addValidators(nameValidator);
-     }
-
-    @Override
-    @GetMapping("/{id}")
-    public Restaurant get(@PathVariable int id) {
-        return super.get(id);
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(nameValidator);
     }
 
     @DeleteMapping("/{id}")
@@ -45,9 +39,27 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         restaurantRepository.deleteExisted(id);
     }
 
+    @Override
+    @GetMapping("/{id}")
+    public Restaurant get(@PathVariable int id) {
+        return super.get(id);
+    }
+
+    @Override
+    @GetMapping("/{id}/actual_menu")
+    public Restaurant getWithMenu(@PathVariable int id) {
+        return super.getWithMenu(id);
+    }
+
     @GetMapping
     public List<Restaurant> getAll() {
         return super.getAll();
+    }
+
+    @Override
+    @GetMapping("/actual")
+    public List<Restaurant> getAllActual() {
+        return super.getAllActual();
     }
 
     @Transactional
@@ -63,14 +75,16 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id, Errors errors) {
         assureIdConsistent(restaurant, id);
         restaurantRepository.save(restaurant);
     }
 
-    @GetMapping("/actual")
     @Override
-    public List<Restaurant> getAllActual() {
-        return super.getAllActual();
+    @GetMapping("/voting_result")
+    public List<Restaurant> getVotingResult() {
+        return super.getVotingResult();
     }
+
+
 }
