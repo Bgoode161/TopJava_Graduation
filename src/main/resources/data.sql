@@ -42,3 +42,5 @@ VALUES (1, 1),
        (2, 9),
        (2, 10),
        (2, 11);
+insert into vote (restaurant_id, user_id, date)
+values (2, 1, '2023-05-10');

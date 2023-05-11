@@ -41,7 +41,7 @@ public abstract class AbstractRestaurantController {
 
     @Transactional
     public List<Restaurant> getVotingResult() {
-        return restaurantRepository.findAllById(voteRepository.getMostRatedRestaurantsIds());
+        return restaurantRepository.findAllById(voteRepository.getMostRatedRestaurantsIdsByDate(LocalDate.now()));
     }
 
 }

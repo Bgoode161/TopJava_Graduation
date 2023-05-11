@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import java.util.List;
@@ -18,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString(callSuper = true)
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Restaurant extends NamedEntity {
 
@@ -31,5 +27,10 @@ public class Restaurant extends NamedEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonManagedReference
     private List<Dish> dishes;
+
+    public Restaurant(Integer id, String name, String address) {
+        super(id, name);
+        this.address = address;
+    }
 
 }
