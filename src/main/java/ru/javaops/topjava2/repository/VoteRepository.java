@@ -19,7 +19,4 @@ public interface VoteRepository extends BaseRepository<Vote> {
 
     List<Vote> findByUserId(int id, Sort sort);
 
-    @Query(value = "SELECT restaurant_id FROM vote WHERE date=:localDate  group by vote.restaurant_id having count(*) = (SELECT max(count) FROM (SELECT restaurant_id, count(*) as count FROM vote GROUP BY vote.restaurant_id) as votecount)", nativeQuery = true)
-    List<Integer> getMostRatedRestaurantsIdsByDate(@Param("localDate") LocalDate localDate);
-
 }

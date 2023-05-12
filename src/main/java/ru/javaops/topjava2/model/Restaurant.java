@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Restaurant extends NamedEntity {
 
     @Column(name = "address", nullable = false)

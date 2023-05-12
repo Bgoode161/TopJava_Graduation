@@ -9,17 +9,13 @@ import ru.javaops.topjava2.model.Restaurant;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional(readOnly = true)
 public interface DishRepository extends BaseRepository<Dish> {
 
     List<Dish> findAllByRestaurantId(int id, Sort sort);
 
-    default Dish prepareAndSave(Dish dish) {
-        if (dish.getDateCreated() == null) {
-            dish.setDateCreated(LocalDate.now());
-        }
-        return save(dish);
-    }
+    Optional<Dish> findByNameIgnoreCaseAndRestaurantIdAndAndDateCreated(String name, int id, LocalDate dateCreated);
 
 }

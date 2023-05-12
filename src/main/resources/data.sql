@@ -25,13 +25,23 @@ VALUES ('Grilled Salmon', 1200, 1),
        ('Caesar Salad', 500, 1),
        ('Chicken Alfredo', 400, 1),
        ('Margherita Pizza', 800, 1),
-       ('Beef Tacos', 750, 1);
-INSERT INTO DISH (name, price, restaurant_id)
-VALUES ('Sushi Roll', 1000, 2),
+       ('Beef Tacos', 750, 1),
+       ('Sushi Roll', 1000, 2),
        ('Pad Thai', 600, 2),
        ('Spaghetti Carbonara', 450, 2),
        ('Pho Soup', 300, 2),
        ('Miso Ramen', 400, 2);
+INSERT INTO DISH (name, date, price, restaurant_id)
+VALUES ('Double Cheeseburger', '2023-05-10', 500, 1),
+       ('Spaghetti Carbonara', '2023-05-10', 990, 1),
+       ('Lasagna Bolognese','2023-05-10',1190, 1),
+       ('Cabbage Rolls', '2023-05-10', 990, 1),
+       ('Steak Frites', '2023-05-10', 1490, 1),
+       ('Beef Stroganoff', '2023-05-10', 1290, 2),
+       ('Chicken Curry', '2023-05-10', 990, 2),
+       ('Wiener Schnitzel', '2023-05-10', 1490, 2),
+       ('Vegetable Salad', '2023-05-10', 300, 2),
+       ('Greek Salad', '2023-05-10', 600 , 2);
 INSERT INTO VOTE (restaurant_id, user_id)
 VALUES (1, 1),
        (1, 4),
@@ -42,5 +52,13 @@ VALUES (1, 1),
        (2, 9),
        (2, 10),
        (2, 11);
-insert into vote (restaurant_id, user_id, date)
-values (2, 1, '2023-05-10');
+INSERT INTO VOTE (date, time,  user_id, restaurant_id)
+VALUES ('2023-05-10', '10:00:00', 1, 1),
+       ('2023-05-10', '10:00:00', 4 , 1),
+       ('2023-05-10', '10:00:00', 5, 1),
+       ('2023-05-10', '10:00:00', 6, 1),
+       ('2023-05-10', '10:00:00', 7, 1),
+       ('2023-05-10', '10:00:00', 8, 2),
+       ('2023-05-10', '10:00:00', 9, 2),
+       ('2023-05-10', '10:00:00', 10, 2),
+       ('2023-05-10', '10:00:00', 11, 2);

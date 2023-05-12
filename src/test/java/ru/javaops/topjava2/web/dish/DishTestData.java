@@ -1,13 +1,13 @@
 package ru.javaops.topjava2.web.dish;
 
 import ru.javaops.topjava2.model.Dish;
-import ru.javaops.topjava2.model.Restaurant;
 import ru.javaops.topjava2.web.MatcherFactory;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.*;
+import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.MONUMENT;
+import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.WALTER;
 
 
 public class DishTestData {

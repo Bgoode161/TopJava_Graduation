@@ -79,12 +79,4 @@ public class AdminRestaurantController extends AbstractRestaurantController {
         assureIdConsistent(restaurant, id);
         restaurantRepository.save(restaurant);
     }
-
-    @Override
-    @GetMapping("/voting_result")
-    public List<Restaurant> getVotingResult() {
-        return super.getVotingResult();
-    }
-
-
 }

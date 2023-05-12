@@ -37,11 +37,17 @@ public class Vote extends BaseEntity {
     @NotNull
     private Integer userId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "restaurant_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "restaurant_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @NotNull
-    @JsonIdentityReference(alwaysAsId = true)
-    public Restaurant restaurant;
+    private Restaurant restaurant;
+
+    public Vote(Integer id, LocalDate dateCreated, LocalTime timeCreated, Integer userId, Restaurant restaurant) {
+        super(id);
+        this.dateCreated = dateCreated;
+        this.timeCreated = timeCreated;
+        this.userId = userId;
+        this.restaurant = restaurant;
+    }
 
 }

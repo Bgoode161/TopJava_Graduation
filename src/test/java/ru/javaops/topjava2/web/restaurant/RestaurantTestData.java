@@ -16,7 +16,8 @@ public class RestaurantTestData {
 
     public static final MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Restaurant.class, "dishes");
 
-    public static MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER_WITH_DISHES = MatcherFactory.usingAssertions(Restaurant.class,  (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("dateCreated", "dishes.restaurant").isEqualTo(e),
+    public static MatcherFactory.Matcher<Restaurant> RESTAURANT_MATCHER_WITH_DISHES = MatcherFactory.usingAssertions(Restaurant.class,
+            (a, e) -> assertThat(a).usingRecursiveComparison().ignoringFields("dateCreated", "dishes.restaurant").isEqualTo(e),
             (a, e) -> assertThat(a).usingElementComparatorIgnoringFields("dateCreated", "dishes.restaurant").isEqualTo(e));
 
     public static final int MONUMENT_ID = 1;
