@@ -1,5 +1,6 @@
 package ru.javaops.topjava2.web.dish;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -65,15 +66,12 @@ public class AdminDishController {
         dishRepository.prepareAndSave(dish);
     }
 
-    @Transactional
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id, @PathVariable int restId) {
-        if (dishRepository.getReferenceById(id).getRestaurant().getId().equals(restId)) {
-            dishRepository.deleteExisted(id);
-        } else {
-            throw new IllegalRequestDataException("Dish with id = " + id + " - does not belong to current restaurant");
-        }
+        dishRepository.deleteExisted(id);
     }
-
 }
+
+

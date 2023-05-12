@@ -6,11 +6,13 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.javaops.topjava2.error.NotFoundException;
 import ru.javaops.topjava2.model.Restaurant;
 import ru.javaops.topjava2.repository.RestaurantRepository;
 import ru.javaops.topjava2.util.JsonUtil;
 import ru.javaops.topjava2.web.AbstractControllerTest;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,10 +22,12 @@ import static ru.javaops.topjava2.web.user.UserTestData.ADMIN_MAIL;
 
 public class AdminRestaurantControllerTest extends AbstractControllerTest {
 
+    private static final String REST_URL_SLASH = AdminRestaurantController.REST_URL + "/";
+
     @Autowired
     RestaurantRepository restaurantRepository;
 
-    private static final String REST_URL_SLASH = AdminRestaurantController.REST_URL + "/";
+
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
@@ -33,6 +37,7 @@ public class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(WALTER));
+        assertThrows(NotFoundException.class, () -> restaurantRepository.getExisted(NOT_FOUND));
     }
 
     @Test

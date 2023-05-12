@@ -4,14 +4,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
-import ru.javaops.topjava2.error.NotFoundException;
-import ru.javaops.topjava2.model.Restaurant;
-import ru.javaops.topjava2.model.User;
 import ru.javaops.topjava2.model.Vote;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 

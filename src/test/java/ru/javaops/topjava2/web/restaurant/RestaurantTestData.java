@@ -39,7 +39,7 @@ public class RestaurantTestData {
     }
 
     public static Restaurant getNew() {
-        return new Restaurant(null, "New", "New Address");
+        return new Restaurant(null, "New", "NewAddress");
     }
 
     public static Restaurant getUpdated() {
