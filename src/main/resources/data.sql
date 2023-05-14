@@ -4,7 +4,6 @@ VALUES ('User', 'user@yandex.ru', '{noop}password'),
        ('Guest', 'guest@gmail.com', '{noop}guest'),
        ('User1', 'user1@yandex.ru', '{noop}password'),
        ('User2', 'user2@yandex.ru', '{noop}password');
-
 INSERT INTO USER_ROLE (role, user_id)
 VALUES ('USER', 1),
        ('ADMIN', 2),
@@ -40,8 +39,7 @@ VALUES ('Double Cheeseburger', '2023-05-10', 500, 1),
        ('Greek Salad', '2023-05-10', 600, 2);
 INSERT INTO VOTE (restaurant_id, user_id)
 VALUES (1, 1),
-       (1, 4),
-       (1, 5);
+       (1, 4);
 
 INSERT INTO VOTE (date, time, user_id, restaurant_id)
 VALUES ('2023-05-10', '10:00:00', 1, 1),

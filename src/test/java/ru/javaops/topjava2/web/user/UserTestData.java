@@ -14,6 +14,7 @@ public class UserTestData {
     public static final int USER_ID = 1;
     public static final int USER_1_ID = 4;
     public static final int USER_2_ID = 5;
+    public static final int USER_3_ID = 6;
 
     public static final int ADMIN_ID = 2;
     public static final int GUEST_ID = 3;
@@ -26,14 +27,15 @@ public class UserTestData {
 
     public static final String USER_2_MAIL = "user2@yandex.ru";
 
+    public static final String USER_3_MAIL = "user3@yandex.ru";
+
     public static final User user = new User(USER_ID, "User", USER_MAIL, "password", Role.USER);
     public static final User admin = new User(ADMIN_ID, "Admin", ADMIN_MAIL, "admin", Role.ADMIN, Role.USER);
     public static final User guest = new User(GUEST_ID, "Guest", GUEST_MAIL, "guest");
 
     public static final User user1 = new User(USER_1_ID, "User1", USER_1_MAIL, "password", Role.USER);
-
     public static final User user2 = new User(USER_2_ID, "User2", USER_2_MAIL, "password", Role.USER);
-
+    public static final User user3 = new User(USER_3_ID, "User2", USER_3_MAIL, "password", Role.USER);
     public static User getNew() {
         return new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.USER));
     }

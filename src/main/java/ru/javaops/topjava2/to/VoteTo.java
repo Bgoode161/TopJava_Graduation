@@ -1,7 +1,6 @@
 package ru.javaops.topjava2.to;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
 import lombok.Value;
 
 import java.time.LocalDate;
@@ -20,7 +19,7 @@ public class VoteTo extends BaseTo {
     @NotNull
     int restaurantId;
 
-   public VoteTo(int id, LocalDate dateCreated, int userId, int restaurantId) {
+   public VoteTo(Integer id, LocalDate dateCreated, int userId, int restaurantId) {
        super(id);
        this.dateCreated = dateCreated;
        this.restaurantId = restaurantId;

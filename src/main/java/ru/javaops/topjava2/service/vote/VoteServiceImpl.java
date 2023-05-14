@@ -47,18 +47,18 @@ public class VoteServiceImpl implements VoteService {
     @Override
     @Transactional
     public VoteTo registerVote(int restId, AuthUser authUser) {
-        if (LocalTime.now().isAfter(CONTROL_TIME)) {
-            throw new IllegalRequestDataException("You cannot vote after 11:00 AM");
-        }
         Vote newVote = new Vote();
         newVote.setRestaurant(restaurantRepository.getReferenceById(restId));
         newVote.setDateCreated(LocalDate.now());
         newVote.setTimeCreated(LocalTime.now());
         newVote.setUserId(authUser.getUser().id());
        int id = getExistedId(newVote.getDateCreated(), authUser.id());
-       if (id != 0) {
+       if (id != 0 && LocalTime.now().isBefore(CONTROL_TIME)) {
            newVote.setId(id);
        }
+       else if (id != 0 && LocalTime.now().isAfter(CONTROL_TIME)) {
+           throw new IllegalRequestDataException("You cannot change your vote after 11:00 AM");
+        }
         return VoteUtil.createTo(voteRepository.save(newVote));
     }
 

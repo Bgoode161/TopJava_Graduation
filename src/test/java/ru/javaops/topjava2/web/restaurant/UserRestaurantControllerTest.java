@@ -8,8 +8,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javaops.topjava2.error.NotFoundException;
 import ru.javaops.topjava2.repository.RestaurantRepository;
 import ru.javaops.topjava2.service.vote.VoteService;
+import ru.javaops.topjava2.util.VoteUtil;
 import ru.javaops.topjava2.web.AbstractControllerTest;
 import ru.javaops.topjava2.web.dish.DishTestData;
+import ru.javaops.topjava2.web.vote.VoteTestData;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -17,7 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.*;
 import static ru.javaops.topjava2.web.restaurant.UserRestaurantController.REST_URL;
-import static ru.javaops.topjava2.web.user.UserTestData.USER_MAIL;
+import static ru.javaops.topjava2.web.user.UserTestData.*;
+import static ru.javaops.topjava2.web.vote.VoteTestData.*;
 
 public class UserRestaurantControllerTest extends AbstractControllerTest {
 
@@ -37,7 +40,7 @@ public class UserRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(WALTER));
-        assertThrows(NotFoundException.class, () -> restaurantRepository.getExisted(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> restaurantRepository.getExisted(VoteTestData.NOT_FOUND));
     }
 
     @Test
@@ -60,5 +63,13 @@ public class UserRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(MONUMENT, WALTER));
+    }
+
+    @Test
+    @WithUserDetails(value = USER_2_MAIL)
+    void registerVote() throws Exception {
+        perform(MockMvcRequestBuilders.post(REST_URL_SLASH + WALTER_ID + "/register_vote"))
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(VoteTestData.VOTE_TO_MATCHER.contentJson(getNewVoteTo()));
     }
 }
