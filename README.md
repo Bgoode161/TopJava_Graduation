@@ -17,7 +17,7 @@ Build a voting system for deciding where to have lunch.
 - Run: `mvn spring-boot:run` in root directory.
 -----------------------------------------------------
 [REST API documentation](http://localhost:8080/)  
-Креденшелы:
+Credentials:
 ```
 User:  user@yandex.ru / password
 Admin: admin@gmail.com / admin

@@ -1,5 +1,6 @@
 package ru.javaops.topjava2.web.vote;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +12,7 @@ import ru.javaops.topjava2.web.AuthUser;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping(value = UserVoteController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserVoteController {
@@ -22,6 +24,7 @@ public class UserVoteController {
 
     @GetMapping
     public List<VoteTo> getAll(@AuthenticationPrincipal AuthUser authUser) {
+        log.info("get all votes belong to current user");
         return voteService.getAllByUser(authUser);
     }
 }
