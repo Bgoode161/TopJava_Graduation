@@ -29,18 +29,18 @@ public class DishServiceImpl implements DishService {
     RestaurantRepository restaurantRepository;
 
     @Override
-    public Dish get(int id, int restId) {
+    public DishTo get(int id, int restId) {
         Dish dish = dishRepository.getExisted(id);
         if (dish.getRestaurant().getId().equals(restId)) {
-            return dish;
+            return DishUtil.createTo(dish);
         } else {
             throw new IllegalRequestDataException(dish.getClass().getSimpleName() + " id = " + id + " - does not belong to this restaurant");
         }
     }
 
     @Override
-    public List<Dish> getAll(int restId) {
-        return dishRepository.findAllByRestaurantId(restId, Sort.by(Sort.Direction.DESC, "dateCreated"));
+    public List<DishTo> getAll(int restId) {
+        return DishUtil.getTos(dishRepository.findAllByRestaurantId(restId, Sort.by(Sort.Direction.DESC, "dateCreated")));
     }
 
     @Override

@@ -57,11 +57,11 @@ public class DishTestData {
 
     public static final List<Dish> walterActualDishes = List.of(walter_dish_1, walter_dish_2, walter_dish_3, walter_dish_4, walter_dish_5);
     public static DishTo getNewTo() {
-        return new DishTo(null, "New Dish", 1000L);
+        return new DishTo(null, "New Dish", 1000L, 1);
     }
 
     public static DishTo getUpdatedTo() {
-        return new DishTo(DISH_1_ID, "UpdatedName", 1200L);
+        return new DishTo(DISH_1_ID, "UpdatedName", 1200L, 1);
     }
 }
 

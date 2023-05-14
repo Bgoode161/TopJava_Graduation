@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface DishService {
 
-    Dish get(int id, int restId);
+    DishTo get(int id, int restId);
 
-    List<Dish> getAll(int restId);
+    List<DishTo> getAll(int restId);
 
     Dish create(DishTo dishTo, int restId);
 

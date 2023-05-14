@@ -37,7 +37,7 @@ public class AdminDishControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(DISH_MATCHER.contentJson(monument_dish_1));
+                .andExpect(DISH_TO_MATCHER.contentJson(createTo(monument_dish_1)));
         assertThrows(NotFoundException.class, () -> dishRepository.getExisted(DishTestData.NOT_FOUND));
     }
 
@@ -50,7 +50,7 @@ public class AdminDishControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(DISH_MATCHER.contentJson(monumentDishes));
+                .andExpect(DISH_TO_MATCHER.contentJson(getTos(monumentDishes)));
     }
 
 

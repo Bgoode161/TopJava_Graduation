@@ -1,5 +1,7 @@
 package ru.javaops.topjava2.web.dish;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@OpenAPIDefinition
 public class AdminDishController {
 
     @Autowired
@@ -31,12 +34,12 @@ public class AdminDishController {
     protected static final String REST_URL = "/api/admin/restaurants/{restId}/dishes";
 
     @GetMapping("/{id}")
-    public Dish get(@PathVariable("id") int id, @PathVariable("restId") int restId) {
+    public DishTo get(@PathVariable("id") int id, @PathVariable("restId") int restId) {
         return dishService.get(id, restId);
     }
 
     @GetMapping
-    public List<Dish> getAll(@PathVariable("restId") int restId) {
+    public List<DishTo> getAll(@PathVariable("restId") int restId) {
         return dishService.getAll(restId);
     }
 

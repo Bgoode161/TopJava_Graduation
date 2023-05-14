@@ -8,12 +8,15 @@ import lombok.Value;
 public class DishTo extends NamedTo {
 
     @NotNull
-    private Long price;
+     Long price;
 
-    public DishTo(Integer id, String name, Long price) {
+    @NotNull
+    Integer restaurantId;
+
+    public DishTo(Integer id, String name, Long price, Integer restaurantId) {
         super(id, name);
         this.price = price;
-
+        this.restaurantId = restaurantId;
     }
 
     public long getPrice() {
