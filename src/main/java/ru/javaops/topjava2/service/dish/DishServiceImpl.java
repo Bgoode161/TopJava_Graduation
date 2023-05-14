@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javaops.topjava2.error.DataConflictException;
 import ru.javaops.topjava2.error.IllegalRequestDataException;
 import ru.javaops.topjava2.model.Dish;
@@ -43,6 +44,7 @@ public class DishServiceImpl implements DishService {
         return DishUtil.getTos(dishRepository.findAllByRestaurantId(restId, Sort.by(Sort.Direction.DESC, "dateCreated")));
     }
 
+    @Transactional
     @Override
     public Dish create(DishTo dishTo, int restId) {
         Dish newDish = DishUtil.getFromTo(dishTo);
@@ -56,6 +58,7 @@ public class DishServiceImpl implements DishService {
         return newDish;
     }
 
+    @Transactional
     @Override
     public void update(DishTo dishTo, int id, int restId) {
         assureIdConsistent(dishTo, id);

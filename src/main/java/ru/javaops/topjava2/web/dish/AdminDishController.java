@@ -46,7 +46,6 @@ public class AdminDishController {
         return dishService.getAll(restId);
     }
 
-    @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody DishTo dishTo, @PathVariable("restId") int restId) {
         log.info("create dish {} for restaurant {}", dishTo, restId);
@@ -56,7 +55,7 @@ public class AdminDishController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @Transactional
+
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody DishTo dishTo, @PathVariable int id, @PathVariable int restId) {
