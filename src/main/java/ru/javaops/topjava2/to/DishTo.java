@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 
+import java.util.Objects;
+
 @Value
 public class DishTo extends NamedTo {
 
@@ -23,5 +25,13 @@ public class DishTo extends NamedTo {
         return price;
     }
 
-
+    @Override
+    public String toString() {
+        return "DishTo{" +
+                "price=" + price +
+                ", restaurantId=" + restaurantId +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                '}';
+    }
 }

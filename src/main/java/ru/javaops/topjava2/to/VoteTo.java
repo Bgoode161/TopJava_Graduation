@@ -40,4 +40,14 @@ public class VoteTo extends BaseTo {
     public int hashCode() {
         return Objects.hash(super.hashCode(), dateCreated, userId, restaurantId);
     }
+
+    @Override
+    public String toString() {
+        return "VoteTo{" +
+                "dateCreated=" + dateCreated +
+                ", userId=" + userId +
+                ", restaurantId=" + restaurantId +
+                ", id=" + id +
+                '}';
+    }
 }

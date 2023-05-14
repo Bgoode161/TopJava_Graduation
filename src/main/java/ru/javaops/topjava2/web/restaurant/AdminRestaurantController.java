@@ -11,6 +11,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javaops.topjava2.model.Restaurant;
+import ru.javaops.topjava2.to.RestaurantTo;
+import ru.javaops.topjava2.util.RestaurantUtil;
 
 import java.net.URI;
 import java.util.List;
@@ -64,9 +66,9 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody RestaurantTo restaurant) {
         checkNew(restaurant);
-        Restaurant created = restaurantRepository.save(restaurant);
+        Restaurant created = restaurantRepository.save(RestaurantUtil.getFromTo(restaurant));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}").buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
@@ -75,8 +77,8 @@ public class AdminRestaurantController extends AbstractRestaurantController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id, Errors errors) {
-        assureIdConsistent(restaurant, id);
-        restaurantRepository.save(restaurant);
+    public void update(@Valid @RequestBody RestaurantTo restaurantTo, @PathVariable int id, Errors errors) {
+        assureIdConsistent(restaurantTo, id);
+        restaurantRepository.save(RestaurantUtil.getFromTo(restaurantTo));
     }
 }

@@ -22,7 +22,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = AdminDishController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-@OpenAPIDefinition
 public class AdminDishController {
 
     @Autowired

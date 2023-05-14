@@ -10,15 +10,15 @@ import java.util.List;
 @UtilityClass
 public class DishUtil {
 
-    public DishTo createTo(Dish dish) {
+    public static DishTo createTo(Dish dish) {
         return new DishTo(dish.getId(), dish.getName(), dish.getPrice(), dish.getRestaurant().getId());
     }
 
-    public Dish getFromTo(DishTo dishTo) {
+    public static Dish getFromTo(DishTo dishTo) {
         return new Dish(dishTo.getId(), dishTo.getName(), LocalDate.now(), dishTo.getPrice(), null);
     }
 
-    public List<DishTo> getTos(List<Dish> dishes) {
+    public static List<DishTo> getTos(List<Dish> dishes) {
         return dishes.stream().map(dish -> createTo(dish)).toList();
     }
 

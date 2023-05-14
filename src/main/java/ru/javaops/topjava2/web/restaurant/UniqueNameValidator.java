@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import ru.javaops.topjava2.HasId;
 import ru.javaops.topjava2.model.Restaurant;
 import ru.javaops.topjava2.repository.RestaurantRepository;
+import ru.javaops.topjava2.to.RestaurantTo;
 
 @Component
 @AllArgsConstructor
@@ -21,13 +23,13 @@ public class UniqueNameValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return Restaurant.class.equals(clazz);
+        return RestaurantTo.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
 
-        Restaurant restaurant = (Restaurant) target;
+        RestaurantTo restaurant = (RestaurantTo) target;
 
         restaurantRepository.findByNameIgnoreCase(restaurant.getName()).ifPresent(dbRest -> {
             if (request.getMethod().equals("PUT")) {

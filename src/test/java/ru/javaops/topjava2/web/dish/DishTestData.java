@@ -7,6 +7,7 @@ import ru.javaops.topjava2.web.MatcherFactory;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.MONUMENT;
 import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.WALTER;
 
@@ -14,7 +15,9 @@ import static ru.javaops.topjava2.web.restaurant.RestaurantTestData.WALTER;
 public class DishTestData {
 
     public static final MatcherFactory.Matcher<Dish> DISH_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Dish.class, "restaurant");
-    public static final MatcherFactory.Matcher<DishTo> DISH_TO_MATCHER = MatcherFactory.usingEqualsComparator(DishTo.class);
+    public static final MatcherFactory.Matcher<DishTo> DISH_TO_MATCHER = MatcherFactory.usingAssertions(DishTo.class,
+            (a, e) -> assertThat(a).usingRecursiveComparison().isEqualTo(e),
+            (a, e) -> assertThat(a).usingElementComparatorIgnoringFields().isEqualTo(e));
 
     public static final int DISH_1_ID = 1;
 
