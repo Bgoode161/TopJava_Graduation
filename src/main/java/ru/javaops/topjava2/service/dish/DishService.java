@@ -15,7 +15,7 @@ public interface DishService {
 
     Dish create(DishTo dishTo, int restId);
 
-    void update(Dish dish, int id, int restId);
+    void update(DishTo dishTo, int id, int restId);
 
     void delete(int id);
 

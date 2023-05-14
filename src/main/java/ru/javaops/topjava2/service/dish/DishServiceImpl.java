@@ -14,6 +14,7 @@ import ru.javaops.topjava2.util.DishUtil;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static ru.javaops.topjava2.util.validation.ValidationUtil.assureIdConsistent;
 
@@ -46,21 +47,25 @@ public class DishServiceImpl implements DishService {
     public Dish create(DishTo dishTo, int restId) {
         Dish newDish = DishUtil.getFromTo(dishTo);
         newDish.setRestaurant(restaurantRepository.getReferenceById(restId));
-        newDish.setDateCreated(LocalDate.now());
-        checkNameUniqueness(newDish, restId);
-        newDish = dishRepository.save(newDish);
+        int existedId = getExistedId(newDish, restId);
+        if (existedId == 0) {
+            newDish = dishRepository.save(newDish);
+        } else {
+            throw new DataConflictException(newDish.getName() + " already offered today in this restaurant");
+        }
         return newDish;
     }
 
     @Override
-    public void update(Dish dish, int id, int restId) {
-        assureIdConsistent(dish, id);
-        if (dish.getDateCreated() == null) {
-            dish.setDateCreated(LocalDate.now());
+    public void update(DishTo dishTo, int id, int restId) {
+        assureIdConsistent(dishTo, id);
+        Dish dishUpdated = DishUtil.getFromTo(dishTo);
+        dishUpdated.setRestaurant(restaurantRepository.getReferenceById(restId));
+        int existedId = getExistedId(dishUpdated, restId);
+        if (existedId != 0 && existedId != dishUpdated.id()) {
+            throw new DataConflictException(dishUpdated.getName() + " already offered today in this restaurant");
         }
-        dish.setRestaurant(restaurantRepository.getReferenceById(restId));
-        checkNameUniqueness(dish, restId);
-        dishRepository.save(dish);
+        dishRepository.save(dishUpdated);
 
     }
 
@@ -69,9 +74,12 @@ public class DishServiceImpl implements DishService {
         dishRepository.deleteExisted(id);
     }
 
-    private void checkNameUniqueness(Dish newDish, int restId) {
-        dishRepository.findByNameIgnoreCaseAndRestaurantIdAndAndDateCreated(newDish.getName(), restId, newDish.getDateCreated()).ifPresent(dish -> {
-            throw new DataConflictException(dish.getName() + " already offered today in this restaurant");
-        });
+    private int getExistedId(Dish newDish, int restId) {
+        int existedId = 0;
+        Optional<Dish> dishDB = dishRepository.findByNameIgnoreCaseAndRestaurantIdAndAndDateCreated(newDish.getName(), restId, newDish.getDateCreated());
+        if (dishDB.isPresent()) {
+            existedId = dishDB.get().id();
+        }
+        return existedId;
     }
 }

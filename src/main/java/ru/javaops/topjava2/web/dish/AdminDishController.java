@@ -1,5 +1,6 @@
 package ru.javaops.topjava2.web.dish;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class AdminDishController {
 
     @Transactional
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Dish> createWithLocation(@RequestBody DishTo dishTo, @PathVariable("restId") int restId) {
+    public ResponseEntity<Dish> createWithLocation(@Valid @RequestBody DishTo dishTo, @PathVariable("restId") int restId) {
         Dish created = dishService.create(dishTo, restId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath().
                 path(REST_URL + "/{id}").buildAndExpand(restId, created.getId()).toUri();
@@ -51,8 +52,8 @@ public class AdminDishController {
     @Transactional
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Dish dish, @PathVariable int id, @PathVariable int restId) {
-        dishService.update(dish, id, restId);
+    public void update(@Valid @RequestBody DishTo dishTo, @PathVariable int id, @PathVariable int restId) {
+        dishService.update(dishTo, id, restId);
     }
 
 

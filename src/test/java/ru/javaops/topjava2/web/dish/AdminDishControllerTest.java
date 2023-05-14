@@ -9,6 +9,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javaops.topjava2.error.NotFoundException;
 import ru.javaops.topjava2.model.Dish;
 import ru.javaops.topjava2.repository.DishRepository;
+import ru.javaops.topjava2.to.DishTo;
+import ru.javaops.topjava2.util.DishUtil;
 import ru.javaops.topjava2.util.JsonUtil;
 import ru.javaops.topjava2.web.AbstractControllerTest;
 
@@ -18,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javaops.topjava2.web.dish.DishTestData.*;
 import static ru.javaops.topjava2.web.user.UserTestData.ADMIN_MAIL;
+import static ru.javaops.topjava2.util.DishUtil.*;
 
 public class AdminDishControllerTest extends AbstractControllerTest {
 
@@ -55,10 +58,10 @@ public class AdminDishControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void createWithLocation() throws Exception {
-        Dish newDish = DishTestData.getNew();
+        Dish newDish = DishUtil.getFromTo(getNewTo());
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL_TEST)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(newDish)))
+                .content(JsonUtil.writeValue(getNewTo())))
                 .andExpect(status().isCreated());
 
         Dish created = DISH_MATCHER.readFromJson(action);
@@ -71,13 +74,13 @@ public class AdminDishControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void update() throws Exception {
-        Dish updated = DishTestData.getUpdated();
+        DishTo updated = getUpdatedTo();
         perform(MockMvcRequestBuilders.put(REST_URL_TEST_SLASH + DISH_1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
-        DISH_MATCHER.assertMatch(dishRepository.getExisted(DISH_1_ID), updated);
+        DISH_MATCHER.assertMatch(dishRepository.getExisted(DISH_1_ID), getFromTo(updated));
 
     }
 

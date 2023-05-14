@@ -1,5 +1,6 @@
 package ru.javaops.topjava2.web.restaurant;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,6 +12,7 @@ import ru.javaops.topjava2.model.Restaurant;
 import ru.javaops.topjava2.repository.RestaurantRepository;
 import ru.javaops.topjava2.util.JsonUtil;
 import ru.javaops.topjava2.web.AbstractControllerTest;
+import ru.javaops.topjava2.web.dish.DishTestData;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -37,12 +39,13 @@ public class AdminRestaurantControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_MATCHER.contentJson(WALTER));
-        assertThrows(NotFoundException.class, () -> restaurantRepository.getExisted(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> restaurantRepository.getExisted(RestaurantTestData.NOT_FOUND));
     }
 
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
-    void getWithDishes() throws Exception {
+    void getWithActualMenu() throws Exception {
+        MONUMENT.setDishes(DishTestData.monumentActualDishes);
         perform(MockMvcRequestBuilders.get(REST_URL_SLASH + MONUMENT_ID + "/actual_menu"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -62,6 +65,8 @@ public class AdminRestaurantControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void getAllActual() throws Exception {
+        MONUMENT.setDishes(DishTestData.monumentActualDishes);
+        WALTER.setDishes(DishTestData.walterActualDishes);
         perform(MockMvcRequestBuilders.get(REST_URL + "/actual"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -108,7 +113,7 @@ public class AdminRestaurantControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = ADMIN_MAIL)
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL_SLASH + NOT_FOUND))
+        perform(MockMvcRequestBuilders.delete(REST_URL_SLASH + RestaurantTestData.NOT_FOUND))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }

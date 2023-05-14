@@ -18,7 +18,7 @@ public class UserVoteController {
     @Autowired
     VoteService voteService;
 
-    static final String REST_URL = "/api/profile/my_votes";
+    static final String REST_URL = "/api/user/votes";
 
     @GetMapping
     public List<VoteTo> getAll(@AuthenticationPrincipal AuthUser authUser) {

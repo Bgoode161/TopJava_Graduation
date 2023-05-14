@@ -1,8 +1,14 @@
 package ru.javaops.topjava2.to;
 
+import jakarta.validation.constraints.NotNull;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
+
+@Value
 public class DishTo extends NamedTo {
 
-    private long price;
+    @NotNull
+    private Long price;
 
     public DishTo(Integer id, String name, Long price) {
         super(id, name);
@@ -13,4 +19,6 @@ public class DishTo extends NamedTo {
     public long getPrice() {
         return price;
     }
+
+
 }

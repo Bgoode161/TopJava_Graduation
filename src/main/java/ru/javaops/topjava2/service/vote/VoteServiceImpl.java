@@ -47,12 +47,15 @@ public class VoteServiceImpl implements VoteService {
     @Override
     @Transactional
     public VoteTo registerVote(int restId, AuthUser authUser) {
+        if (LocalTime.now().isAfter(CONTROL_TIME)) {
+            throw new IllegalRequestDataException("You cannot vote after 11:00 AM");
+        }
         Vote newVote = new Vote();
         newVote.setRestaurant(restaurantRepository.getReferenceById(restId));
         newVote.setDateCreated(LocalDate.now());
         newVote.setTimeCreated(LocalTime.now());
         newVote.setUserId(authUser.getUser().id());
-       int id = checkUniqueness(newVote.getDateCreated(), authUser.id());
+       int id = getExistedId(newVote.getDateCreated(), authUser.id());
        if (id != 0) {
            newVote.setId(id);
        }
@@ -64,13 +67,10 @@ public class VoteServiceImpl implements VoteService {
         voteRepository.deleteExisted(id);
     }
 
-    public int checkUniqueness(LocalDate dateCreated, int userId) {
+    public int getExistedId(LocalDate dateCreated, int userId) {
         Optional<Vote> voteDB = voteRepository.findVoteByDateCreatedAndAndUserId(dateCreated, userId);
         int voteId = 0;
         if (voteDB.isPresent()) {
-            if (LocalTime.now().isAfter(CONTROL_TIME)) {
-                throw new IllegalRequestDataException("You cannot change your decision after 11:00 AM");
-            }
           voteId = voteDB.get().id();
         }
         return voteId;
